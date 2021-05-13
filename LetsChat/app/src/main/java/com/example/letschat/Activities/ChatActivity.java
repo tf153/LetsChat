@@ -1,6 +1,9 @@
 package com.example.letschat.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +13,10 @@ import com.example.letschat.Models.Message;
 import com.example.letschat.databinding.ActivityChatBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +36,10 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         messages=new ArrayList<>();
-        adapter=new MessagesAdapter(this,messages);
+        adapter=new MessagesAdapter(this,messages,senderRoom,receiverRoom);
+
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerView.setAdapter(adapter);
 
         String name=getIntent().getStringExtra("name");
         String receiverUid=getIntent().getStringExtra("uid");
@@ -40,6 +49,26 @@ public class ChatActivity extends AppCompatActivity {
         receiverRoom=receiverUid+senderUid;
 
         database= FirebaseDatabase.getInstance();
+        database.getReference().child("chats")
+                .child(senderRoom)
+                .child("messages")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        messages.clear();
+                        for(DataSnapshot snapshot1:snapshot.getChildren()){
+                            Message message=snapshot1.getValue(Message.class);
+                            message.setMessageId(snapshot1.getKey());
+                            messages.add(message);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
         binding.sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,10 +77,14 @@ public class ChatActivity extends AppCompatActivity {
                 Date date=new Date();
 
                 Message message=new Message(messageTxt,senderUid,date.getTime());
+                binding.messageBox.setText("");
+
+                String randomKey=database.getReference().push().getKey();
 
                 database.getReference().child("chats")
                         .child(senderRoom)
                         .child("messages")
+                        .child(randomKey)
                         .setValue(message)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -59,6 +92,7 @@ public class ChatActivity extends AppCompatActivity {
                                 database.getReference().child("chats")
                                         .child(receiverRoom)
                                         .child("messages")
+                                        .child(randomKey)
                                         .setValue(message)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
