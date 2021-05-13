@@ -1,10 +1,12 @@
 package com.example.letschat.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,13 +15,14 @@ import com.example.letschat.Models.Message;
 import com.example.letschat.R;
 import com.example.letschat.databinding.ItemReceivedBinding;
 import com.example.letschat.databinding.ItemSentBinding;
-import com.github.pgreze.reactions.ReactionPopup;
-import com.github.pgreze.reactions.ReactionsConfig;
-import com.github.pgreze.reactions.ReactionsConfigBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+
+import io.zla.reactions.ReactionPopup;
+import io.zla.reactions.ReactionsConfig;
+import io.zla.reactions.ReactionsConfigBuilder;
 
 public class MessagesAdapter extends RecyclerView.Adapter{
 
@@ -60,7 +63,7 @@ public class MessagesAdapter extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Message message=messages.get(position);
+        Message message = messages.get(position);
         int[] reactions = new int[]{
                 R.drawable.like,
                 R.drawable.love,
@@ -75,11 +78,11 @@ public class MessagesAdapter extends RecyclerView.Adapter{
                 .build();
 
         ReactionPopup popup = new ReactionPopup(context, config, (pos) -> {
-            if(holder.getClass()==SentViewHolder.class) {
+            if (holder.getClass() == SentViewHolder.class) {
                 SentViewHolder viewHolder = (SentViewHolder) holder;
                 viewHolder.binding.feeling.setImageResource(reactions[pos]);
                 viewHolder.binding.feeling.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 ReceiverViewHolder viewHolder = (ReceiverViewHolder) holder;
                 viewHolder.binding.feeling.setImageResource(reactions[pos]);
 
@@ -102,44 +105,40 @@ public class MessagesAdapter extends RecyclerView.Adapter{
             return true; // true is closing popup, false is requesting a new selection
         });
 
-        if(holder.getClass()==SentViewHolder.class){
-            SentViewHolder viewHolder=(SentViewHolder)holder;
+        if (holder.getClass() == SentViewHolder.class) {
+            SentViewHolder viewHolder = (SentViewHolder) holder;
             viewHolder.binding.message.setText(message.getMessage());
 
-            if(message.getFeeling()>=0) {
-                //message.setFeeling(reactions[(int) message.getFeeling()]);
+            if (message.getFeeling() >= 0) {
                 viewHolder.binding.feeling.setImageResource(reactions[message.getFeeling()]);
                 viewHolder.binding.feeling.setVisibility(View.VISIBLE);
-            }
-            else{
+            } else {
                 viewHolder.binding.feeling.setVisibility(View.GONE);
             }
 
             viewHolder.binding.message.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    popup.onTouch(v,event);
+                    popup.onTouch(v, event);
                     return false;
                 }
             });
-        }else
-        {
-            ReceiverViewHolder viewHolder=(ReceiverViewHolder)holder;
+        } else {
+            ReceiverViewHolder viewHolder = (ReceiverViewHolder) holder;
             viewHolder.binding.message.setText(message.getMessage());
 
-            if(message.getFeeling()>=0) {
+            if (message.getFeeling() >= 0) {
                 //message.setFeeling(reactions[(int) message.getFeeling()]);
                 viewHolder.binding.feeling.setImageResource(reactions[message.getFeeling()]);
                 viewHolder.binding.feeling.setVisibility(View.VISIBLE);
-            }
-            else{
+            } else {
                 viewHolder.binding.feeling.setVisibility(View.GONE);
             }
 
             viewHolder.binding.message.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    popup.onTouch(v,event);
+                    popup.onTouch(v, event);
                     return false;
                 }
             });
