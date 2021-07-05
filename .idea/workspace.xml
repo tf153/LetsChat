@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="528a9910-577e-4c2b-9cf2-121f7b588a42" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1u9BW7gekCHSiaH8qI68G7RAYWl" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="528a9910-577e-4c2b-9cf2-121f7b588a42" name="Default Changelist" comment="" />
+      <created>1624067955083</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1624067955083</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-1229" y="-273" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1624068204578">
+      <screen x="-1366" y="-328" width="1366" height="768" />
+    </state>
+    <state x="-1229" y="-273" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.864/-1366.-328.1366.768@-1366.-328.1366.768" timestamp="1624068204578" />
+    <state x="277" y="77" key="SettingsEditor" timestamp="1624069956058">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="277" y="77" key="SettingsEditor/0.0.1536.864/-1366.-328.1366.768@0.0.1536.864" timestamp="1624069956058" />
+  </component>
+</project>
